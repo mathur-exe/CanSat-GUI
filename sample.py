@@ -28,45 +28,171 @@
 #         print('disconnected\n',e)
 
 
-# --------------------------------------------------------------------------------------------------------
-
-import random
-from itertools import count
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-x_vals = [0, 1, 2, 3, 4, 5]
-x_vals = []
-y_vals = [0, 1, 3, 2, 3, 5]
-y_vals = []
-# plt.plot(x_vals,y_vals)
-index = count()
+# import matplotlib.pyplot as plt
+# import time
+# import numpy as np
+# import matplotlib.animation as animation
+# import serial.tools.list_ports as ports
+# import serial
 
 
-def onClick(event):
-    global pause
-    pause ^= True
+# def get_COM_ports():
+#     return (ports.comports())
 
 
-fig = plt.figure()
-fig,axes = plt.subplots()
+# comport = str(get_COM_ports()[-1]).split(' ')[0]
+# print(comport)
+# baud = 9600
 
 
-
-def animate(i):
-    x_vals.append(next(index))
-    y_vals.append(random.randint(0, 5))
-    plt.cla()
-    plt.plot(x_vals, y_vals)
-    x_start = 0
-    if(len(x_vals) < 60):
-        x_start = 0
-    else:
-        x_start = len(x_vals)-60
-    plt.xlim(x_start, len(x_vals))
-    plt.ylim(0, max(y_vals)+2)
+# def initialize_ser_communication():
+#     ser = serial.Serial(comport, baud)
+#     ser.close()
+#     ser.open()
+#     return ser
 
 
-ani = FuncAnimation(plt.gcf(), animate, interval=1)
-plt.tight_layout()
-plt.show()
+# def read_serial_data(ser):
+#     data = ser.read()
+
+
+# x = 0
+# y = x**2
+
+# fig = plt.figure()
+# ax1 = fig.add_subplot(1, 1, 1)
+# ax1.plot(x, y)
+
+
+# def animate(i):
+#     ax1.clear()
+#     x+=1
+#     y=x**2
+#     ax1.plot(x, y)
+
+
+# ani = animation.FuncAnimation(fig, animate, interval=1000)
+# plt.show()
+
+
+# from tkinter import *
+
+# def donothing():
+#    filewin = Toplevel(root)
+#    button = Button(filewin, text="Do nothing button")
+#    button.pack()
+
+# root = Tk()
+# menubar = Menu(root)
+# filemenu = Menu(menubar, tearoff=0)
+# filemenu.add_command(label="New", command=donothing)
+# filemenu.add_command(label="Open", command=donothing)
+# filemenu.add_command(label="Save", command=donothing)
+# filemenu.add_command(label="Save as...", command=donothing)
+# filemenu.add_command(label="Close", command=donothing)
+
+# filemenu.add_separator()
+
+# filemenu.add_command(label="Exit", command=root.quit)
+# menubar.add_cascade(label="File", menu=filemenu)
+# editmenu = Menu(menubar, tearoff=0)
+# editmenu.add_command(label="Undo", command=donothing)
+
+# editmenu.add_separator()
+
+# editmenu.add_command(label="Cut", command=donothing)
+# editmenu.add_command(label="Copy", command=donothing)
+# editmenu.add_command(label="Paste", command=donothing)
+# editmenu.add_command(label="Delete", command=donothing)
+# editmenu.add_command(label="Select All", command=donothing)
+
+# menubar.add_cascade(label="Edit", menu=editmenu)
+# helpmenu = Menu(menubar, tearoff=0)
+# helpmenu.add_command(label="Help Index", command=donothing)
+# helpmenu.add_command(label="About...", command=donothing)
+# menubar.add_cascade(label="Help", menu=helpmenu)
+
+# root.config(menu=menubar)
+# root.mainloop()
+
+
+# from tkinter import *
+
+# ws = Tk()
+# ws.title('PythonGuides')
+# ws.geometry('500x300')
+# ws.config(bg='yellow')
+
+# img = PhotoImage(file="./images/wpu.png")
+# label = Label(
+#     ws,
+#     image=img
+# )
+# label.place(x=0, y=0)
+
+# text = Text(
+#     ws,
+#     height=10,
+#     width=53
+# )
+# text.place(x=30, y=50)
+
+# button = Button(
+#     ws,
+#     text='SEND',
+#     relief=RAISED,
+#     font=('Arial Bold', 18)
+# )
+# button.place(x=190, y=250)
+
+# menu=Menu(ws)
+
+# GPS=menu.add_cascade(label='GPS',font=('Impact',30,'bold'))
+
+# ws.config(menu=menu)
+# ws.mainloop()
+
+
+# get the coordinates of a place using name of place
+# from geopy.geocoders import Nominatim
+# loc=Nominatim(user_agent='GetLoc')
+# getloc=loc.geocode('Pune')
+# print(getloc.latitude)
+# print(getloc.longitude)
+
+
+# from tkinter import *
+# import tkintermapview
+
+
+# latitude = 18.518153
+# longitude = 73.815232
+
+# root = Tk()
+# root.geometry('640x480')
+
+# mylbl = Label(root)
+# mylbl.pack(pady=20)
+
+# mapwidget = tkintermapview.TkinterMapView(mylbl, width=640, height=480)
+# mapwidget.pack()
+
+
+# # set coordinates by default
+# SAT_location =mapwidget.set_position(18.517226596733817, 73.81538809368527,marker=True,text='MITWPU GLOBE')
+# MITWPU_location = mapwidget.set_position(
+#     latitude, longitude, marker=True, text='MITWPU')
+# mapwidget.set_path([(18.517226596733817, 73.81538809368527),(latitude,longitude)])
+# mapwidget.update()
+
+# # set zoom level
+# mapwidget.set_zoom(18)
+
+# root.mainloop()
+
+
+import geocoder
+import folium
+g=geocoder.ip('me')
+myadd=g.latlng
+print(myadd)

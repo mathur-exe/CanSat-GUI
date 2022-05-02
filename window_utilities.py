@@ -2,12 +2,13 @@ from tkinter import *
 from click import command
 import pandas as pd
 from tkinter import ttk
+from PIL import ImageTk, Image
 
 
 class window_utils:
     def set_heading(window):
         label = Label(window, text="CANSAT FLIGHT SOFTWARE", font=(
-            "Arial", int(int(window.winfo_screenheight())/30), "bold"), bg='white').pack(pady=5)
+            "Impact", int(int(window.winfo_screenheight())/30)), bg='white', fg='#d77337').pack(pady=5)
 
     def set_window_background(window):
         bg = PhotoImage(file='./images/bg.jpg')
@@ -18,7 +19,7 @@ class window_utils:
         pass
 
     def insert_logo(window):
-        img = PhotoImage(file='./images/mit_logo.png')
+        # img = PhotoImage(file='./images/mit_logo.png')
         lbl = Label(window, image=img, text='')
         lbl.pack()
 
@@ -45,23 +46,51 @@ class window_utils:
 
     def create_drop_down(window, options):
         drop_val = StringVar()
-        dropdown = ttk.Combobox(window, width=27,height=5, textvariable=drop_val)
+        dropdown = ttk.Combobox(
+            window, width=50, height=5, textvariable=drop_val)
         dropdown['values'] = options
+        dropdown.pack(anchor=CENTER)
         dropdown.current(0)
-        dropdown.pack()
         return dropdown
-    
-    def close_btn_clicked(CURRENT_SCREEN,PREVIOUS_SCREEN):
-            CURRENT_SCREEN.destroy()
-            PREVIOUS_SCREEN.deiconify()
-            window_utils.bring_screen_to_center(PREVIOUS_SCREEN)
-            pass
+
+    def close_btn_clicked(CURRENT_SCREEN, PREVIOUS_SCREEN):
+        CURRENT_SCREEN.destroy()
+        PREVIOUS_SCREEN.deiconify()
+        window_utils.bring_screen_to_center(PREVIOUS_SCREEN)
+        pass
+
     def create_frame(window):
-        frame = Frame(window, background='white')
+        frame = Frame(window, background='white',bg='')
         frame.pack(side=TOP)
-        frame.config(width=int(window.winfo_screenwidth()), height=int(window.winfo_screenheight())/10)
+        frame.config(width=int(window.winfo_screenwidth()),
+                     height=int(window.winfo_screenheight())/10)
         return frame
-    def add_image(window,image):
-        img_lbl=Label(window,image=image)
-        img_lbl.pack(padx=5,pady=5)
+
+    def add_image(window, image):
+        img_lbl = Label(window, image=image)
+        img_lbl.pack(padx=5, pady=5)
         img_lbl.config(bg="white")
+
+    def create_menu(window):
+        menu = Menu(window)
+        window.config(menu=menu)
+        sub_menu = Menu(menu, tearoff=0)
+        sub_menu.add_command(label='HOME')
+        sub_menu.add_command(label='PAYLOAD')
+        sub_menu.add_separator()
+        sub_menu.add_command(label='GPS')
+        sub_menu.add_command(label='CANSAT')
+        sub_menu.add_separator()
+        sub_menu.add_command(label='EXIT', command=window.destroy)
+        about_menu = Menu(menu, tearoff=0)
+        menu.add_cascade(label='EXIT', command=window.destroy)
+
+    def add_backgound(window):
+        pass
+        # img=ImageTk.PhotoImage(Image.open('./images/mit_logo.png'))
+        # lbl=Label(window,image=img).pack(expand=True,fill=BOTH)
+
+
+class serial_comm:
+    def __init__(self):
+        pass
