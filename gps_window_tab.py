@@ -4,36 +4,38 @@ from PIL import ImageTk
 import tkintermapview as mapview
 from plot_window import PLOT_SCREEN
 
+
 class GPS_WINDOW:
-    def __init__(self, PREVIOUS_SCREEN):
+    def __init__(self, SCREEN):
         def open_plot_window():
-            # self.THIS_SCREEN.withdraw()
-            plot_window=PLOT_SCREEN(self.THIS_SCREEN)
+            # self.SCREEN.withdraw()
+            plot_window = PLOT_SCREEN(self.SCREEN)
             pass
-        self.THIS_SCREEN = Toplevel(PREVIOUS_SCREEN)
+        # self.SCREEN = Toplevel(SCREEN)
+        self.SCREEN=SCREEN
         self.CANSAT_LONGITUDE = 18.518285031299342
         self.CANSAT_LATITUDE = 73.81472988306248
-        window_utils.bring_screen_to_center(self.THIS_SCREEN)
-        window_utils.set_heading(self.THIS_SCREEN)
-        window_width = int(self.THIS_SCREEN.winfo_screenwidth())
+        # window_utils.bring_screen_to_center(self.SCREEN)
+        # window_utils.set_heading(self.SCREEN)
+        window_width = int(self.SCREEN.winfo_screenwidth())
         # window_width = 640
-        window_height = int(self.THIS_SCREEN.winfo_screenheight())
+        window_height = int(self.SCREEN.winfo_screenheight())
         # creating the buttons inside the tabs frame in the main window
         # this exists for all the windows of the GUI
-        TABS_FRAME = window_utils.create_frame(window=self.THIS_SCREEN)
+        # TABS_FRAME = window_utils.create_frame(window=self.SCREEN)
         # inserting the switch to CANSAT window option
-        OPEN_CANSAT_WINDOW = Button(
-            TABS_FRAME, text='CANSAT', width=int(window_width*0.010))
-        OPEN_CANSAT_WINDOW.pack(anchor=CENTER, side=LEFT)
-        OPEN_PAYLOAD_WINDOW = Button(
-            TABS_FRAME, text='PAYLOAD', width=int(window_width*0.010))
-        OPEN_PAYLOAD_WINDOW.pack(
-            anchor=CENTER, side=LEFT, padx=int(0.010*window_width))
-        OPEN_PLOT_WINDOW = Button(
-            TABS_FRAME, text='PLOTS', width=int(window_width*0.010),command=open_plot_window)
-        OPEN_PLOT_WINDOW.pack(anchor=CENTER, side=LEFT)
+        # OPEN_CANSAT_WINDOW = Button(
+        #     TABS_FRAME, text='CANSAT', width=int(window_width*0.010))
+        # OPEN_CANSAT_WINDOW.pack(anchor=CENTER, side=LEFT)
+        # OPEN_PAYLOAD_WINDOW = Button(
+        #     TABS_FRAME, text='PAYLOAD', width=int(window_width*0.010))
+        # OPEN_PAYLOAD_WINDOW.pack(
+        #     anchor=CENTER, side=LEFT, padx=int(0.010*window_width))
+        # OPEN_PLOT_WINDOW = Button(
+        #     TABS_FRAME, text='PLOTS', width=int(window_width*0.010), command=open_plot_window)
+        # OPEN_PLOT_WINDOW.pack(anchor=CENTER, side=LEFT)
 
-        MAINFRAME = window_utils.create_frame(window=self.THIS_SCREEN)
+        MAINFRAME = window_utils.create_frame(window=SCREEN)
 
         LATITUDE_FRAME = window_utils.create_frame(window=MAINFRAME)
 
@@ -103,7 +105,7 @@ class GPS_WINDOW:
         latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
 
 
-root = Tk()
-root.withdraw()
-gps_scn = GPS_WINDOW(root)
-root.mainloop()
+# root = Tk()
+# root.withdraw()
+# gps_scn = GPS_WINDOW(root)
+# root.mainloop()

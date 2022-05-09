@@ -191,8 +191,119 @@
 # root.mainloop()
 
 
-import geocoder
-import folium
-g=geocoder.ip('me')
-myadd=g.latlng
-print(myadd)
+# from tkinter import *
+# from tkinter.ttk import Notebook
+# from plot_window import PLOT_SCREEN
+# root=Tk()
+# root.geometry('640x480')
+# tabControl=Notebook(root)
+# tab1=Frame(tabControl)
+# tab2=Frame(tabControl)
+
+# # add contents to tab1
+# Label(tab1,text='This is tab1').pack()
+
+
+# # add contents to tab2
+# Label(tab2,text='This is tab2').pack()
+
+
+# tabControl.add(tab1,text='Plot')
+# tabControl.add(tab2,text='GPS')
+# tabControl.pack()
+
+
+# root.mainloop()
+
+
+
+
+from tkinter import *
+
+from window_utilities import window_utils
+from tkinter import ttk
+from plot_window_tab import PLOT_SCREEN
+from gps_window_tab import GPS_WINDOW
+from connect_device_tab import CONNECT_DEVICE
+
+
+root = Tk()
+style = ttk.Style()
+style.theme_use('default')
+style.configure('TNotebook.Tab', background="#d77337")
+style.map("TNotebook", background= [("selected", "#d77337")])
+root_width, root_height = window_utils.bring_screen_to_center(root)
+# options = ['Home', 'Payload', 'GPS', 'Plot']
+
+
+style = ttk.Style()
+ 
+style.theme_create('pastel', settings={
+    ".": {
+        "configure": {
+            "background": '#ffffff', # All except tabs
+            "font": 'red'
+        }
+    },
+    "TNotebook": {
+        "configure": {
+            "background":'#ffffff', # Your margin color
+            "tabmargins": [2, 5, 0, 0], # margins: left, top, right, separator
+        }
+    },
+    "TNotebook.Tab": {
+        "configure": {
+            "background": '#b35f00', # tab color when not selected
+            "padding": [10, 2], # [space between text and horizontal tab-button border, space between text and vertical tab_button border]
+            "font":"white"
+        },
+        "map": {
+            "background": [("selected", '#ffa033')], # Tab color when selected
+            "expand": [("selected", [1, 1, 1, 0])] # text margins
+        }
+    }
+})
+style.theme_use('pastel')
+
+
+
+window_utils.set_heading(root)
+# insert tab control to the window
+tabControl = ttk.Notebook(root)
+tabControl.pack(side=TOP, anchor=W)
+
+plot_tab = Frame(tabControl,bg='white')
+gps_tab = Frame(tabControl,bg='white')
+connect_device_tab = Frame(tabControl,bg='white')
+
+
+tabControl.add(plot_tab, text='PLOT')
+tabControl.add(gps_tab, text='GPS')
+tabControl.add(connect_device_tab, text='CONNECT')
+tabControl.select(0)
+
+# insert the plot window in plot tab
+plt_screen=PLOT_SCREEN(plot_tab)
+
+# insert the GPS window in gps tab
+gps_screen=GPS_WINDOW(gps_tab)
+
+# insert the connect device window in connect device tab
+connect_device_screen=CONNECT_DEVICE(connect_device_tab)
+
+root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+ 
