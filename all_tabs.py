@@ -226,82 +226,89 @@ from plot_window_tab import PLOT_SCREEN
 from gps_window_tab import GPS_WINDOW
 from connect_device_tab import CONNECT_DEVICE
 import serial
-root = Tk()
-style = ttk.Style()
-style.theme_use('default')
-style.configure('TNotebook.Tab', background="#d77337")
-style.map("TNotebook", background= [("selected", "#d77337")])
-root_width, root_height = window_utils.bring_screen_to_center(root)
-# options = ['Home', 'Payload', 'GPS', 'Plot']
+class ALL_TABS:
+    def __init__(self,window):
+        window.withdraw()
+        root = Toplevel(window)
+        style = ttk.Style()
+        style.theme_use('default')
+        style.configure('TNotebook.Tab', background="#d77337")
+        style.map("TNotebook", background= [("selected", "#d77337")])
+        root_width, root_height = window_utils.bring_screen_to_center(root)
+        # options = ['Home', 'Payload', 'GPS', 'Plot']
 
 
-style = ttk.Style()
- 
-style.theme_create('pastel', settings={
-    ".": {
-        "configure": {
-            "background": '#ffffff', # All except tabs
-            "font": 'red'
-        }
-    },
-    "TNotebook": {
-        "configure": {
-            "background":'#ffffff', # Your margin color
-            "tabmargins": [2, 5, 0, 0], # margins: left, top, right, separator
-        }
-    },
-    "TNotebook.Tab": {
-        "configure": {
-            "background": '#b35f00', # tab color when not selected
-            "padding": [10, 2], # [space between text and horizontal tab-button border, space between text and vertical tab_button border]
-            "font":"white"
-        },
-        "map": {
-            "background": [("selected", '#ffa033')], # Tab color when selected
-            "expand": [("selected", [1, 1, 1, 0])] # text margins
-        }
-    }
-})
-style.theme_use('pastel')
+        # style = ttk.Style()
+        
+        # style.theme_create('pastel', settings={
+        #     ".": {
+        #         "configure": {
+        #             "background": '#ffffff', # All except tabs
+        #             "font": 'red'
+        #         }
+        #     },
+        #     "TNotebook": {
+        #         "configure": {
+        #             "background":'#ffffff', # Your margin color
+        #             "tabmargins": [2, 5, 0, 0], # margins: left, top, right, separator
+        #         }
+        #     },
+        #     "TNotebook.Tab": {
+        #         "configure": {
+        #             "background": '#b35f00', # tab color when not selected
+        #             "padding": [10, 2], # [space between text and horizontal tab-button border, space between text and vertical tab_button border]
+        #             "font":"white"
+        #         },
+        #         "map": {
+        #             "background": [("selected", '#ffa033')], # Tab color when selected
+        #             "expand": [("selected", [1, 1, 1, 0])] # text margins
+        #         }
+        #     }
+        # })
+        # style.theme_use('pastel')
 
 
-serial_device=serial.Serial()
-print(id(serial_device))
+        serial_device=serial.Serial()
+        print(id(serial_device))
 
-window_utils.set_heading(root)
-quit_btn=window_utils.quit_btn(root)
-def ask_before_quitting():
-    if(messagebox.askyesno('QUIT', 'Do you really want to exit?')):
-        exit()
-    pass
-quit_btn.config(command=ask_before_quitting)
-# insert tab control to the window
-tabControl = ttk.Notebook(root)
-tabControl.pack(side=TOP, anchor=W)
+        window_utils.set_heading(root)
+        quit_btn=window_utils.quit_btn(root)
+        def ask_before_quitting():
+            if(messagebox.askyesno('QUIT', 'Do you really want to exit?')):
+                exit()
+            pass
+        quit_btn.config(command=ask_before_quitting)
+        # insert tab control to the window
+        tabControl = ttk.Notebook(root)
+        tabControl.pack(side=TOP, anchor=W)
 
-# defining the tabs of the window
-plot_tab = Frame(tabControl,bg='white')
-gps_tab = Frame(tabControl,bg='white')
-connect_device_tab = Frame(tabControl,bg='white')
+        # defining the tabs of the window
+        plot_tab = Frame(tabControl,bg='white')
+        gps_tab = Frame(tabControl,bg='white')
+        connect_device_tab = Frame(tabControl,bg='white')
 
 
-tabControl.add(plot_tab, text='PLOT')
-tabControl.add(gps_tab, text='GPS')
-tabControl.add(connect_device_tab, text='CONNECT')
-tabControl.select(0)
+        tabControl.add(plot_tab, text='PLOT')
+        tabControl.add(gps_tab, text='GPS')
+        tabControl.add(connect_device_tab, text='CONNECT')
+        tabControl.select(0)
 
-# insert the plot window in plot tab
-plt_screen=PLOT_SCREEN(plot_tab)
+        # insert the plot window in plot tab
+        plt_screen=PLOT_SCREEN(plot_tab)
 
-# insert the GPS window in gps tab
-gps_screen=GPS_WINDOW(gps_tab)
+        # insert the GPS window in gps tab
+        gps_screen=GPS_WINDOW(gps_tab)
 
-# insert the connect device window in connect device tab
-connect_device_screen=CONNECT_DEVICE(connect_device_tab,serial_device)
+        # insert the connect device window in connect device tab
+        connect_device_screen=CONNECT_DEVICE(connect_device_tab,serial_device)
+        
+        def on_closing():
+            window.deiconify()
+            root.withdraw()
+        root.protocol("WM_DELETE_WINDOW", on_closing)
+        # root.overrideredirect(1)
 
-# root.overrideredirect(1)
-
-root.mainloop()
+        # root.mainloop()
 
 
 

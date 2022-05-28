@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 from gps_window import GPS_WINDOW
-
+from all_tabs import ALL_TABS
 root = Tk()
 root.title("Can-Sat Ground Station GUI")
 root.geometry("600x600")
@@ -59,12 +59,13 @@ class Login:
         if self.txt_pass.get() == "" or self.txt_user.get() == "":
             messagebox.showerror(
                 "Error", "All fields are required", parent=self.root)
-        elif self.txt_pass.get() != "pass" or self.txt_user.get() != "Satyam":
+        elif self.txt_pass.get() != "1" or self.txt_user.get() != "1":
             messagebox.showerror(
                 "Error", "Invalid Username/Password", parent=self.root)
         else:
             root.withdraw()
-            gps_window = GPS_WINDOW(root)
+            # gps_window = GPS_WINDOW(root)
+            all_tabs=ALL_TABS(root)
 
 
 class win_title:

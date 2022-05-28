@@ -3,6 +3,7 @@ from click import command
 import pandas as pd
 from tkinter import ttk
 from PIL import ImageTk, Image
+from tkinter import messagebox
 
 
 class window_utils:
@@ -60,7 +61,7 @@ class window_utils:
         pass
 
     def create_frame(window):
-        frame = Frame(window, background='white',bg='')
+        frame = Frame(window, background='white', bg='')
         frame.pack(side=TOP)
         frame.config(width=int(window.winfo_screenwidth()),
                      height=int(window.winfo_screenheight())/10)
@@ -89,6 +90,17 @@ class window_utils:
         pass
         # img=ImageTk.PhotoImage(Image.open('./images/mit_logo.png'))
         # lbl=Label(window,image=img).pack(expand=True,fill=BOTH)
+
+    # def ask_before_quitting():
+    #     if(messagebox.askyesno('QUIT', 'Do you really want to exit?')):
+    #         exit()
+    #     pass
+
+    def quit_btn(window):
+        btn = Button(window, text='QUIT', bg='orange',
+                     fg='white')
+        btn.pack(padx=10, pady=10, side=TOP, anchor=NE)
+        return btn
 
 
 class serial_comm:

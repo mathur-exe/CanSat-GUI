@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0ab3051-3963-41ef-a41e-c6cb13478c71" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/images/mit_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/mitwpu_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/connect_device_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/connect_device_tab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_real_time_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_real_time_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plot_window_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/plot_window_tab.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/sample.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample/sample.ino" beforeDir="false" afterPath="$PROJECT_DIR$/sample/sample.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tempCodeRunnerFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/tempCodeRunnerFile.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/window_utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/window_utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

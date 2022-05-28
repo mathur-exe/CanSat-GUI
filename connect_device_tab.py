@@ -8,10 +8,12 @@ from tkinter import ttk
 
 
 class CONNECT_DEVICE:
-    def __init__(self, SCREEN):
+    def __init__(self, SCREEN,serial_device):
+        print(id(serial_device))
         self.baud_rates_list = [300, 600, 1200, 2400,
                                 4800, 9600, 19200, 28800, 38400, 57600, 115200]
-        self.serial_device = serial.Serial()
+        # self.serial_device = serial.Serial()
+        self.serial_device = serial_device
         comports = ports.comports()
         for port in comports:
             if 'Bluetooth' in (port):
@@ -36,11 +38,11 @@ class CONNECT_DEVICE:
                 comport_drop_down.config(state=not DISABLED)
                 connect_device_btn.config(state=DISABLED)
                 # self.serial_device.reset_input_buffer()
-                # self.serial_device.open()
+                self.serial_device.open()
                 # SCREEN.after(1,plot_data)
             except:
                 messagebox.showerror('Error', 'An error occured')
-                connect_device_btn.config(state=not DISABLED)
+                connect_device_btn.config(state=NORMAL)
             pass
 
         def change_screen(event):
@@ -50,6 +52,24 @@ class CONNECT_DEVICE:
         def select_COM_port(event):
             self.COMPORT = event.widget.get()
             print(str(self.COMPORT).split('-')[0].strip())
+
+        def update_comports():
+            try:
+                self.serial_device.close()
+                comports = ports.comports()
+                comport_drop_down['values'] = comports
+                baud_rates_drop_down.config(state=not DISABLED)
+                comport_drop_down.config(state=not DISABLED)
+                connect_device_btn.config(state=NORMAL)
+                messagebox.showinfo(
+                    'RESET Successful', 'Please connect to device in order to get real time data')
+            except:
+                messagebox.showerror(
+                    'ERROR', 'An error occured while resetting the connection with device.')
+                baud_rates_drop_down.config(state=not DISABLED)
+                comport_drop_down.config(state=not DISABLED)
+                connect_device_btn.config(state=NORMAL)
+            pass
 
         mainFrame = Frame(SCREEN, height=int(
             SCREEN.winfo_screenheight()), width=int(SCREEN.winfo_screenwidth()), bg='')
@@ -75,7 +95,9 @@ class CONNECT_DEVICE:
         connect_device_btn = Button(
             baud_rate_frame, text='CONNECT', width=20, relief=RAISED, command=connect_to_device)
         connect_device_btn.pack(pady=40)
-
+        refresh_btn = Button(
+            baud_rate_frame, text='Reset Connection', command=update_comports)
+        refresh_btn.pack()
 
 
 # window = Tk()

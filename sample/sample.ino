@@ -1,5 +1,3 @@
-#include <ESP8266WiFi.h>
-int i = 0;
 void setup()
 {
     Serial.begin(9600);
@@ -7,7 +5,6 @@ void setup()
 
 void loop()
 {
-    Serial.println(i);
-        i++;
+    Serial.println(random(45));        
         delay(1000);
 }

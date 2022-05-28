@@ -103,7 +103,7 @@ class GPS_WINDOW:
         latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
 
 
-root = Tk()
-root.withdraw()
-gps_scn = GPS_WINDOW(root)
-root.mainloop()
+# root = Tk()
+# root.withdraw()
+# gps_scn = GPS_WINDOW(root)
+# root.mainloop()
