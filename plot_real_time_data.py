@@ -18,7 +18,8 @@ def plot_data():
     try:
         if condition:
             a = s.readline()
-            a.decode()
+            a=a.decode()
+            print(a)
             if len(data) < 100:
                 data = np.append(data, float(a[0:4]))
             else:
