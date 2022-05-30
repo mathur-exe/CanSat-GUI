@@ -110,7 +110,7 @@ class PLOT_SCREEN:
         start_plotting_btn = Button(
             START_STOP_BTN_FRAME, text='START PLOTTING', borderwidth=1, command=start_plotting)
         start_plotting_btn.pack(side=LEFT, anchor=CENTER, padx=10)
-        stop_plotting_btn = Button(START_STOP_BTN_FRAME, text='STOP PLOTTING',command=stop_plotting)
+        stop_plotting_btn = Button(START_STOP_BTN_FRAME, text='PAUSE PLOTTING',command=stop_plotting)
         stop_plotting_btn.pack(side=LEFT, anchor=CENTER, padx=10)
 
         def update_plots_axes():

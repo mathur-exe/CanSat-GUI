@@ -13,7 +13,7 @@ class CONNECT_DEVICE:
         self.baud_rates_list = [300, 600, 1200, 2400,
                                 4800, 9600, 19200, 28800, 38400, 57600, 115200]
         # self.serial_device = serial.Serial()
-        self.serial_device = serial_device
+        self.serial_device = serial.Serial()
         comports = ports.comports()
         for port in comports:
             if 'Bluetooth' in (port):

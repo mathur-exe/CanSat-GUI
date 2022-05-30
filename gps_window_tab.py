@@ -42,23 +42,24 @@ class GPS_WINDOW:
         #     self.real_time_plotting_monitor = SCREEN.after(
         #         1000, start_real_time_gps)
 
-        def start_real_time_gps():
-            try:
-                while self.ser.in_waiting:
-                    data = self.ser.readline()
-                    data = data.decode()
-                    data = data.strip('\r\n')
-                    data = data.split(',')
-                    data=[float(x) for x in data]
-                    # for i in range(len(data)):
-                    #     data[i] = float(data[i])
-                print(data)
-                self.CANSAT_LATITUDE = data[7]
-                self.CANSAT_LATITUDE = data[8]
-                self.real_time_plotting_monitor = SCREEN.after(
-                    1000, start_real_time_gps)
-            except:
-                pass
+        # def start_real_time_gps():
+        #     try:
+        #         while self.ser.in_waiting:
+        #             data = self.ser.readline()
+        #             data = data.decode()
+        #             data = data.strip('\r\n')
+        #             data = data.split(',')
+        #             data=[float(x) for x in data]
+        #             # for i in range(len(data)):
+        #             #     data[i] = float(data[i])
+        #         print(data)
+        #         self.CANSAT_LATITUDE = data[7]
+        #         self.CANSAT_LATITUDE = data[8]
+        #         self.real_time_plotting_monitor = SCREEN.after(
+        #             1000, start_real_time_gps)
+        #     except Exception as e:
+        #         print(e)
+        #         pass
         
         
         MAINFRAME = window_utils.create_frame(window=SCREEN)
@@ -127,14 +128,14 @@ class GPS_WINDOW:
         gps_map.set_position(18.518285031299342,
                              73.81472988306248, marker=True, text='MITWPU')
         # set the satellite location
-        # gps_map.set_position(18.507249128665855,
-        #                      73.80523053001455, marker=True, text='CANSAT')
-        # gps_map.set_path([(18.507249128665855, 73.80523053001455),
-        #                  (18.518285031299342, 73.81472988306248)])
-        # gps_map.set_zoom(19)
+        gps_map.set_position(18.507249128665855,
+                             73.80523053001455, marker=True, text='CANSAT')
+        gps_map.set_path([(18.507249128665855, 73.80523053001455),
+                         (18.518285031299342, 73.81472988306248)])
+        gps_map.set_zoom(19)
         longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
         latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
-        self.real_time_plotting_monitor=SCREEN.after(1000, start_real_time_gps)
+        # self.real_time_plotting_monitor=SCREEN.after(1000, start_real_time_gps)
         
 
 
