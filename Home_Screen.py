@@ -44,12 +44,12 @@ class Login:
         lbl_user = Label(frame_login, text="Username", font=(
             "Goudy old style", 15, "bold"), fg="gray", bg="#FFFADA").place(x=80, y=140)
         self.txt_user = Entry(frame_login, font=(
-            "times new roman", 15), bg="lightgray",show='*')
+            "times new roman", 15), bg="lightgray", show='*')
         self.txt_user.place(x=80, y=170, width=350, height=35)
         lbl_pass = Label(frame_login, text="Password", font=(
             "Goudy old style", 15, "bold"), fg="gray", bg="#FFFADA").place(x=80, y=210)
         self.txt_pass = Entry(frame_login, font=(
-            "times new roman", 15), bg="lightgray",show='*')
+            "times new roman", 15), bg="lightgray", show='*')
         self.txt_pass.place(x=80, y=240, width=350, height=35)
         login_btn = Button(self.root, command=self.login_function, text="Login", fg="white", bg="#d77337", font=(
             "times new roman", 20)).place(x=180, y=550, width=180, height=40)
@@ -64,7 +64,7 @@ class Login:
         else:
             root.withdraw()
             # gps_window = GPS_WINDOW(root)
-            all_tabs=ALL_TABS(root)
+            all_tabs = ALL_TABS(root)
 
 
 class win_title:

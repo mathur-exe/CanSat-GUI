@@ -239,19 +239,26 @@ class ALL_TABS:
         self.comports = ports.comports()
         comport_frame=Frame(choice_window,bg='white')
         comport_frame.pack(side=TOP,anchor=CENTER)
+        Label(comport_frame,text='Select COM Port',bg='white').pack(side=TOP,anchor=NW)
         comport_dropdown=window_utils.create_drop_down(comport_frame,self.comports)
         comport_dropdown.current(0)
+        
+        Label(comport_frame,bg='white',height=5).pack(side=TOP,anchor=NW)
+        
         baudrate_frame=Frame(choice_window,bg='white')
         baudrate_frame.pack(side=TOP,anchor=CENTER)
+        Label(baudrate_frame,text='Select Baud Rate',bg='white').pack(side=TOP,anchor=NW)
         baudrate_dropdown=window_utils.create_drop_down(baudrate_frame,self.baud_rates_list)
         baudrate_dropdown.current(5)
+        Label(baudrate_frame,bg='white',height=5).pack(side=TOP,anchor=NW)
         window_width = 600
-        window_height = 400
+        window_height = 300
         center_x = int((window.winfo_screenwidth()-window_width)/2)
         center_y = int((window.winfo_screenheight()-window_height)/2)
         choice_window.geometry(f'600x400+{center_x}+{center_y}')
         choice_window.overrideredirect(True)
         choice_window.attributes('-topmost',True)
+        choice_window.config(bg='white')
         def connect_device():
             try:
                 self.serial_device=serial.Serial(str(comport_dropdown.get()).split('-')[0].strip(),baudrate_dropdown.get())
