@@ -14,8 +14,9 @@ from scipy.ndimage import gaussian_filter1d
 
 
 class PLOT_SCREEN:
-    def __init__(self, SCREEN):
-        self.ser = serial.Serial('COM7', 9600)
+    def __init__(self, SCREEN,serial_device):
+        # self.ser = serial.Serial('COM7', 9600)
+        self.ser = serial_device
         self.start_plotting = False
         self.temperature_c = self.temperature_f = self.humidity = self.heat_index_c = self.heat_index_f = self.uv_index = self.uv_sensor_voltage = np.array([
         ])

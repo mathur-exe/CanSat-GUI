@@ -3,16 +3,18 @@ from window_utilities import window_utils
 from PIL import ImageTk
 import tkintermapview as mapview
 from plot_window import PLOT_SCREEN
-
+import serial
 
 class GPS_WINDOW:
-    def __init__(self, SCREEN):
+    def __init__(self, SCREEN,serial_device):
         def open_plot_window():
             # self.SCREEN.withdraw()
             plot_window = PLOT_SCREEN(self.SCREEN)
             pass
         # self.SCREEN = Toplevel(SCREEN)
         self.SCREEN = SCREEN
+        # self.ser=serial.Serial('COM7',9600)
+        self.ser=serial_device
         self.CANSAT_LONGITUDE = 18.518285031299342
         self.CANSAT_LATITUDE = 73.81472988306248
         # window_utils.bring_screen_to_center(self.SCREEN)
@@ -34,7 +36,31 @@ class GPS_WINDOW:
         # OPEN_PLOT_WINDOW = Button(
         #     TABS_FRAME, text='PLOTS', width=int(window_width*0.010), command=open_plot_window)
         # OPEN_PLOT_WINDOW.pack(anchor=CENTER, side=LEFT)
+        
+        # def start_plotting():
+        #     start_plotting_button['state'] = 'disabled'
+        #     self.real_time_plotting_monitor = SCREEN.after(
+        #         1000, start_real_time_gps)
 
+        def start_real_time_gps():
+            try:
+                while self.ser.in_waiting:
+                    data = self.ser.readline()
+                    data = data.decode()
+                    data = data.strip('\r\n')
+                    data = data.split(',')
+                    data=[float(x) for x in data]
+                    # for i in range(len(data)):
+                    #     data[i] = float(data[i])
+                print(data)
+                self.CANSAT_LATITUDE = data[7]
+                self.CANSAT_LATITUDE = data[8]
+                self.real_time_plotting_monitor = SCREEN.after(
+                    1000, start_real_time_gps)
+            except:
+                pass
+        
+        
         MAINFRAME = window_utils.create_frame(window=SCREEN)
 
         LATITUDE_FRAME = window_utils.create_frame(window=MAINFRAME)
@@ -47,9 +73,10 @@ class GPS_WINDOW:
         GPS_FRAME = window_utils.create_frame(window=MAINFRAME)
         GPS_FRAME.config(highlightbackground='#d77337', highlightthickness=5)
 
-        BUTTONS_FRAME = window_utils.create_frame(window=MAINFRAME)
-        start_plotting_button = Button(BUTTONS_FRAME, text='Start Plotting', width=int(
-            window_width*0.010), command=start_plotting)
+        # BUTTONS_FRAME = window_utils.create_frame(window=MAINFRAME)
+        # start_plotting_button = Button(BUTTONS_FRAME, text='Start Plotting', width=int(
+        #     window_width*0.010), command=start_plotting)
+        # start_plotting_button.pack()
         Label(LATITUDE_FRAME, text='Cansat Location Co-Ordinates',
               width=int(window_height/45), anchor=W, fg='#d77337', bg='white', font=(f'Arial {int(window_height/45)} bold')).pack(side=TOP, anchor=W, padx=int(window_width)*0.1)
 
@@ -100,30 +127,15 @@ class GPS_WINDOW:
         gps_map.set_position(18.518285031299342,
                              73.81472988306248, marker=True, text='MITWPU')
         # set the satellite location
-        gps_map.set_position(18.507249128665855,
-                             73.80523053001455, marker=True, text='CANSAT')
-        gps_map.set_path([(18.507249128665855, 73.80523053001455),
-                         (18.518285031299342, 73.81472988306248)])
-        gps_map.set_zoom(19)
+        # gps_map.set_position(18.507249128665855,
+        #                      73.80523053001455, marker=True, text='CANSAT')
+        # gps_map.set_path([(18.507249128665855, 73.80523053001455),
+        #                  (18.518285031299342, 73.81472988306248)])
+        # gps_map.set_zoom(19)
         longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
         latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
-
-        def start_plotting():
-            start_plotting_button['state'] = 'disabled'
-            self.real_time_plotting_monitor = SCREEN.after(
-                1000, start_real_time_gps)
-
-        def start_real_time_gps():
-            while self.ser.in_waiting:
-                data = self.ser.readline()
-                data = data.decode()
-                data = data.strip('\r\n')
-                data = data.split(',')
-                for i in range(len(data)):
-                    data[i] = float(data[i])
-            self.real_time_plotting_monitor = SCREEN.after(
-                1000, start_real_time_gps)
-            # print(data)
+        self.real_time_plotting_monitor=SCREEN.after(1000, start_real_time_gps)
+        
 
 
 # root = Tk()

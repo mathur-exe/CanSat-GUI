@@ -226,6 +226,7 @@ from plot_window_tab import PLOT_SCREEN
 from gps_window_tab import GPS_WINDOW
 from connect_device_tab import CONNECT_DEVICE
 import serial
+
 class ALL_TABS:
     def __init__(self,window):
         window.withdraw()
@@ -268,7 +269,7 @@ class ALL_TABS:
         # style.theme_use('pastel')
 
 
-        serial_device=serial.Serial()
+        serial_device=serial.Serial('COM7',9600)
         print(id(serial_device))
 
         window_utils.set_heading(root)
@@ -294,10 +295,10 @@ class ALL_TABS:
         tabControl.select(0)
 
         # insert the plot window in plot tab
-        plt_screen=PLOT_SCREEN(plot_tab)
+        plt_screen=PLOT_SCREEN(plot_tab,serial_device)
 
         # insert the GPS window in gps tab
-        gps_screen=GPS_WINDOW(gps_tab)
+        gps_screen=GPS_WINDOW(gps_tab,serial_device)
 
         # insert the connect device window in connect device tab
         connect_device_screen=CONNECT_DEVICE(connect_device_tab,serial_device)
