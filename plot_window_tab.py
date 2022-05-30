@@ -21,7 +21,7 @@ class PLOT_SCREEN:
         ])
         # ser=serial.Serial('COM7',9600)
         # ser.reset_input_buffer()
-        # print(id(serial_device))
+        ## print(id(serial_device))
         # self.temperature_c = temperature_c.to_numpy()
 
         def update_plot():
@@ -33,7 +33,7 @@ class PLOT_SCREEN:
                     data = data.split(',')
                     for i in range(len(data)):
                         data[i] = float(data[i])
-                    print(data)
+                    #print(data)
                     self.humidity = np.append(self.humidity, data[0])
                     self.temperature_c = np.append(
                         self.temperature_c, data[1])
@@ -79,15 +79,15 @@ class PLOT_SCREEN:
                     self.uv_sensor_voltage, sigma=2))
 
                 update_plots_axes()
-                # print(temperature_c.tolist().append(10))
+                ## print(temperature_c.tolist().append(10))
                 # lines.set_xdata(float(serial_data.strip()))
-                # print(type(temperature_c))
+                ## print(type(temperature_c))
                 canvas1.draw()
-                print('update plot evoked')
+                #print('update plot evoked')
                 pass
             except Exception as e:
-                print('error updating plot')
-                print(e)
+                #print('error updating plot')
+                #print(e)
                 pass
             self.real_time_plot_monitor=SCREEN.after(1000, update_plot)
 

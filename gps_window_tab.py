@@ -12,7 +12,7 @@ class GPS_WINDOW:
             plot_window = PLOT_SCREEN(self.SCREEN)
             pass
         # self.SCREEN = Toplevel(SCREEN)
-        self.SCREEN=SCREEN
+        self.SCREEN = SCREEN
         self.CANSAT_LONGITUDE = 18.518285031299342
         self.CANSAT_LATITUDE = 73.81472988306248
         # window_utils.bring_screen_to_center(self.SCREEN)
@@ -46,6 +46,10 @@ class GPS_WINDOW:
 
         GPS_FRAME = window_utils.create_frame(window=MAINFRAME)
         GPS_FRAME.config(highlightbackground='#d77337', highlightthickness=5)
+
+        BUTTONS_FRAME = window_utils.create_frame(window=MAINFRAME)
+        start_plotting_button = Button(BUTTONS_FRAME, text='Start Plotting', width=int(
+            window_width*0.010), command=start_plotting)
         Label(LATITUDE_FRAME, text='Cansat Location Co-Ordinates',
               width=int(window_height/45), anchor=W, fg='#d77337', bg='white', font=(f'Arial {int(window_height/45)} bold')).pack(side=TOP, anchor=W, padx=int(window_width)*0.1)
 
@@ -103,6 +107,23 @@ class GPS_WINDOW:
         gps_map.set_zoom(19)
         longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
         latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
+
+        def start_plotting():
+            start_plotting_button['state'] = 'disabled'
+            self.real_time_plotting_monitor = SCREEN.after(
+                1000, start_real_time_gps)
+
+        def start_real_time_gps():
+            while self.ser.in_waiting:
+                data = self.ser.readline()
+                data = data.decode()
+                data = data.strip('\r\n')
+                data = data.split(',')
+                for i in range(len(data)):
+                    data[i] = float(data[i])
+            self.real_time_plotting_monitor = SCREEN.after(
+                1000, start_real_time_gps)
+            # print(data)
 
 
 # root = Tk()
