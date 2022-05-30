@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
-from gps_window import GPS_WINDOW
+# from gps_window import GPS_WINDOW
 from all_tabs import ALL_TABS
 root = Tk()
 root.title("Can-Sat Ground Station GUI")
@@ -44,7 +44,7 @@ class Login:
         lbl_user = Label(frame_login, text="Username", font=(
             "Goudy old style", 15, "bold"), fg="gray", bg="#FFFADA").place(x=80, y=140)
         self.txt_user = Entry(frame_login, font=(
-            "times new roman", 15), bg="lightgray", show='*')
+            "times new roman", 15), bg="lightgray")
         self.txt_user.place(x=80, y=170, width=350, height=35)
         lbl_pass = Label(frame_login, text="Password", font=(
             "Goudy old style", 15, "bold"), fg="gray", bg="#FFFADA").place(x=80, y=210)

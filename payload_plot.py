@@ -1,4 +1,5 @@
 from time import sleep
+from time import sleep
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk
@@ -13,7 +14,7 @@ import serial
 from scipy.ndimage import gaussian_filter1d
 
 
-class PLOT_SCREEN:
+class PAYLOAD_PLOT_SCREEN:
     def __init__(self, SCREEN,serial_device):
         # self.ser = serial.Serial('COM7', 9600)
         self.ser = serial_device
@@ -108,10 +109,10 @@ class PLOT_SCREEN:
             pass
         START_STOP_BTN_FRAME = window_utils.create_frame(SCREEN)
         start_plotting_btn = Button(
-            START_STOP_BTN_FRAME, text='START PLOTTING', borderwidth=1, command=start_plotting,bg='orange',fg='white')
+            START_STOP_BTN_FRAME, text='START PLOTTING', borderwidth=1, command=start_plotting)
         start_plotting_btn.pack(side=LEFT, anchor=CENTER, padx=10)
-        stop_plotting_btn = Button(START_STOP_BTN_FRAME, text='PAUSE PLOTTING',command=stop_plotting,bg='orange',fg='white',borderwidth=1)
-        stop_plotting_btn.pack(side=RIGHT, anchor=CENTER, padx=10)
+        stop_plotting_btn = Button(START_STOP_BTN_FRAME, text='STOP PLOTTING',command=stop_plotting)
+        stop_plotting_btn.pack(side=LEFT, anchor=CENTER, padx=10)
 
         def update_plots_axes():
             xlim_start = 0
@@ -166,9 +167,9 @@ class PLOT_SCREEN:
             fig7.set_ylim(self.uv_sensor_voltage.min()-5,
                           self.uv_sensor_voltage.max()+5)
             pass
-        figure = plt.figure(figsize=(20,8))
+        figure = plt.figure(figsize=(20, 8))
         # humidity
-        fig1 = figure.add_subplot(335)
+        fig1 = figure.add_subplot(331)
         # fig1.plot(self.humidity)
         fig1.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -185,7 +186,7 @@ class PLOT_SCREEN:
         lines1 = fig1.plot([], [])[0]
 
         # temperature_c
-        fig2 = figure.add_subplot(331)
+        fig2 = figure.add_subplot(332)
         # fig2.plot(self.humidity)
         fig2.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -202,7 +203,7 @@ class PLOT_SCREEN:
         lines2 = fig2.plot([], [])[0]
 
         # temperature_f
-        fig3 = figure.add_subplot(334)
+        fig3 = figure.add_subplot(333)
         # fig3.plot(self.heat_index_c)
         fig3.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -219,7 +220,7 @@ class PLOT_SCREEN:
         lines3 = fig3.plot([], [])[0]
 
         # heat_index_c
-        fig4 = figure.add_subplot(333)
+        fig4 = figure.add_subplot(334)
         # fig4.plot(self.temperature_f)
         fig4.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -236,7 +237,7 @@ class PLOT_SCREEN:
         lines4 = fig4.plot([], [])[0]
 
         # heat_index_f
-        fig5 = figure.add_subplot(336)
+        fig5 = figure.add_subplot(335)
         # fig5.plot(self.heat_index_f)
         fig5.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -253,7 +254,7 @@ class PLOT_SCREEN:
         lines5 = fig5.plot([], [])[0]
 
         # uv index
-        fig6 = figure.add_subplot(337)
+        fig6 = figure.add_subplot(336)
         # fig5.plot(self.heat_index_f)
         fig6.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -269,7 +270,7 @@ class PLOT_SCREEN:
         # fig5.set_ylim(ylim_start, ylim_end+5)
         lines6 = fig6.plot([], [])[0]
 
-        fig7 = figure.add_subplot(339)
+        fig7 = figure.add_subplot(337)
         # fig5.plot(self.heat_index_f)
         fig7.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
@@ -293,22 +294,3 @@ class PLOT_SCREEN:
         toolbar = NavigationToolbar2Tk(canvas1, SCREEN)
         toolbar.config(bg='')
         toolbar.update()
-
-
-# def plot_screen():
-#     plot_sc = PLOT_SCREEN(root)
-#     pass
-
-
-'''
-BY DEFAULT THE WINDOW SHOULD ALL THE GRAPHS IN PLACE AS EMPTY
-
-AFTER SUCCESSFUL CONNECTION WITH MCU IT SHOULD GET THE DATA AND UPDATE ACCORDINGLY
-
-DECLARE THE PLOT OBJS SEPERATELY FOR EACH PLOT AND USE THEIR LINE PROPERTY FOR EFFICIENCY
-
-KEEPING THE GRAPHS AND WINDOW STATIC AND CHANGING ONLY THE PLOT LINE AND THE GRAPH LIMITS IS THE WORK TO BE DONE.
-
-THE GRAPH SHOULD BE SCROLLABLE WHENEVER PAUSED
-
-'''

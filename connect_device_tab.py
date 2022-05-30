@@ -8,7 +8,7 @@ from tkinter import ttk
 
 
 class CONNECT_DEVICE:
-    def __init__(self, SCREEN,serial_device):
+    def __init__(self, SCREEN, serial_device):
         print(id(serial_device))
         self.baud_rates_list = [300, 600, 1200, 2400,
                                 4800, 9600, 19200, 28800, 38400, 57600, 115200]
