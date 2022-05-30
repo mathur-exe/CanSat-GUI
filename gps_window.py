@@ -3,9 +3,11 @@ from window_utilities import window_utils
 from PIL import ImageTk
 import tkintermapview as mapview
 from plot_window import PLOT_SCREEN
+import serial
 
 class GPS_WINDOW:
     def __init__(self, PREVIOUS_SCREEN):
+        self.ser=serial.Serial('COM7',9600)
         def open_plot_window():
             # self.THIS_SCREEN.withdraw()
             plot_window=PLOT_SCREEN(self.THIS_SCREEN)
