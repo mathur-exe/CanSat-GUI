@@ -28,26 +28,27 @@ class PAYLOAD_PLOT_SCREEN:
 
         def update_plot():
             try:
-                while self.ser.in_waiting:
-                    data = self.ser.readline()
-                    data = data.decode()
-                    data = data.strip('\r\n')
-                    data = data.split(',')
-                    for i in range(len(data)):
-                        data[i] = float(data[i])
-                    #print(data)
-                    self.humidity = np.append(self.humidity, data[0])
-                    self.temperature_c = np.append(
-                        self.temperature_c, data[1])
-                    self.temperature_f = np.append(
-                        self.temperature_f, data[2])
-                    self.heat_index_c = np.append(
-                        self.heat_index_c, data[3])
-                    self.heat_index_f = np.append(
-                        self.heat_index_f, data[4])
-                    self.uv_index = np.append(self.uv_index, data[5])
-                    self.uv_sensor_voltage = np.append(
-                        self.uv_sensor_voltage, data[6])
+                # while self.ser.in_waiting:
+                data = self.ser.readline()
+                data = data.decode()
+                data = data.strip('\r\n')
+                data = data.split(',')
+                for i in range(len(data)):
+                    data[i] = float(data[i])
+                #print(data)
+                self.humidity = np.append(self.humidity, data[0])
+                self.temperature_c = np.append(
+                    self.temperature_c, data[1])
+                self.temperature_f = np.append(
+                    self.temperature_f, data[2])
+                self.heat_index_c = np.append(
+                    self.heat_index_c, data[3])
+                self.heat_index_f = np.append(
+                    self.heat_index_f, data[4])
+                self.uv_index = np.append(self.uv_index, data[5])
+                self.uv_sensor_voltage = np.append(
+                    self.uv_sensor_voltage, data[6])
+
 
                 lines1.set_xdata(np.linspace(
                     0, len(self.humidity), len(self.humidity)))

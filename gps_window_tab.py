@@ -18,8 +18,8 @@ class GPS_WINDOW:
         self.data=None
         # self.ser=serial.Serial('COM7',9600)
         self.ser=serial_device
-        self.CANSAT_LONGITUDE = 18.518285031299342
-        self.CANSAT_LATITUDE = 73.81472988306248
+        self.CANSAT_LATITUDE = 18.51883080425217
+        self.CANSAT_LONGITUDE = 73.81659914010753
         # window_utils.bring_screen_to_center(self.SCREEN)
         # window_utils.set_heading(self.SCREEN)
         window_width = int(self.SCREEN.winfo_screenwidth())
@@ -51,16 +51,22 @@ class GPS_WINDOW:
             start_plotting_button['state'] = 'normal'
         def start_real_time_gps():
             try:
-                while self.ser.in_waiting:
-                    self.data = self.ser.readline()
-                    self.data = self.data.decode()
-                    self.data = self.data.strip('\r\n')
-                    self.data = self.data.split(',')
-                    self.data=[float(x) for x in self.data]
+                # while self.ser.in_waiting:
+                self.data = self.ser.readline()
+                self.data = self.data.decode()
+                self.data = self.data.strip('\r\n')
+                self.data = self.data.split(',')
+                self.data=[float(x) for x in self.data]
+                    
+                    
                 print(self.data)
                 self.CANSAT_LATITUDE = self.data[7]
                 self.CANSAT_LONGITUDE = self.data[8]
                 self.cansat_location.set_position(self.CANSAT_LATITUDE, self.CANSAT_LONGITUDE)
+                self.path.delete()
+                self.path=gps_map.set_path([self.MITWPU_location.position,self.cansat_location.position])
+                gps_map.set_position(self.CANSAT_LATITUDE, self.CANSAT_LONGITUDE)
+                # gps_map.set_path([self.MITWPU_location.position,self.cansat_location.position])
                 latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
                 longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
                 # gps_map.set_zoom(15)
@@ -145,13 +151,16 @@ class GPS_WINDOW:
         self.mitwpu_long = 73.81472988306248
         # gps_map.set_position(,
                             #  , marker=True, text='MITWPU')
-        gps_map.set_position(self.mitwpu_lat, self.mitwpu_long, marker=True, text='MITWPU')
+        gps_map.set_position(self.mitwpu_lat, self.mitwpu_long)
+        
+        self.MITWPU_location=gps_map.set_marker(self.mitwpu_lat, self.mitwpu_long,text='MITWPU')
         # set the satellite location
-        self.cansat_location=gps_map.set_marker(18.518285031299342,73.81472988306248,text='Cansat')
+        self.cansat_location=gps_map.set_marker(self.CANSAT_LATITUDE,self.CANSAT_LONGITUDE ,text='Cansat')
         # self.can_sat_location=gps_map.set_position(18.507249128665855,
         #                      73.80523053001455, marker=True, text='CANSAT')
         # gps_map.set_path([(18.507249128665855, 73.80523053001455),
                         #  (18.518285031299342, 73.81472988306248)])
+        self.path=gps_map.set_path([self.MITWPU_location.position,self.cansat_location.position])
         gps_map.set_zoom(15)
         
         longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
