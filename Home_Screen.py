@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter import messagebox
+
 from PIL import Image, ImageTk
-# from gps_window import GPS_WINDOW
+
 from all_tabs import ALL_TABS
+
 root = Tk()
 root.title("Can-Sat Ground Station GUI")
 root.geometry("600x600")

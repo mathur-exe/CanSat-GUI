@@ -1,10 +1,11 @@
 from tkinter import *
-from tkinter import messagebox
-from window_utilities import window_utils
-import serial.tools.list_ports as ports
+from tkinter import messagebox, ttk
+
 import serial
+import serial.tools.list_ports as ports
 from PIL import Image, ImageTk
-from tkinter import ttk
+
+from window_utilities import window_utils
 
 
 class CONNECT_DEVICE:
@@ -12,7 +13,6 @@ class CONNECT_DEVICE:
         print(id(serial_device))
         self.baud_rates_list = [300, 600, 1200, 2400,
                                 4800, 9600, 19200, 28800, 38400, 57600, 115200]
-        # self.serial_device = serial.Serial()
         self.serial_device = serial.Serial()
         comports = ports.comports()
         for port in comports:
@@ -37,9 +37,7 @@ class CONNECT_DEVICE:
                 baud_rates_drop_down.config(state=not DISABLED)
                 comport_drop_down.config(state=not DISABLED)
                 connect_device_btn.config(state=DISABLED)
-                # self.serial_device.reset_input_buffer()
                 self.serial_device.open()
-                # SCREEN.after(1,plot_data)
             except:
                 messagebox.showerror('Error', 'An error occured')
                 connect_device_btn.config(state=NORMAL)

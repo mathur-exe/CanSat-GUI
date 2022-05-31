@@ -1,40 +1,35 @@
 from time import sleep
 from tkinter import *
 from tkinter import ttk
-from PIL import ImageTk
+
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-from matplotlib.figure import Figure
-from window_utilities import window_utils
+import pandas as pd
 import serial
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
+                                               NavigationToolbar2Tk)
+from matplotlib.figure import Figure
+from PIL import ImageTk
 from scipy.ndimage import gaussian_filter1d
+
+from window_utilities import window_utils
 
 
 class PLOT_SCREEN:
     def __init__(self, SCREEN,serial_device):
-        # self.ser = serial.Serial('COM7', 9600)
         self.ser = serial_device
         self.start_plotting = False
         self.temperature_c = self.temperature_f = self.humidity = self.heat_index_c = self.heat_index_f = self.uv_index = self.uv_sensor_voltage = np.array([
         ])
-        # ser=serial.Serial('COM7',9600)
-        # ser.reset_input_buffer()
-        ## print(id(serial_device))
-        # self.temperature_c = temperature_c.to_numpy()
 
         def update_plot():
             try:
-                # while self.ser.in_waiting:
                 data = self.ser.readline()
                 data = data.decode()
                 data = data.strip('\r\n')
                 data = data.split(',')
                 for i in range(len(data)):
                     data[i] = float(data[i])
-                #print(data)
                 self.humidity = np.append(self.humidity, data[0])
                 self.temperature_c = np.append(
                     self.temperature_c, data[1])
@@ -81,11 +76,7 @@ class PLOT_SCREEN:
                     self.uv_sensor_voltage, sigma=2))
 
                 update_plots_axes()
-                ## print(temperature_c.tolist().append(10))
-                # lines.set_xdata(float(serial_data.strip()))
-                ## print(type(temperature_c))
                 canvas1.draw()
-                #print('update plot evoked')
                 pass
             except Exception as e:
                 #print('error updating plot')
@@ -93,11 +84,9 @@ class PLOT_SCREEN:
                 pass
             self.real_time_plot_monitor=SCREEN.after(1000, update_plot)
 
-        # data, temperature_c, temperature_f, humidity, heat_index_c, heat_index_f = pd.Series(np.array(np.zeros(1))),pd.Series(np.array(np.zeros(1))),pd.Series(np.array(np.zeros(1))),pd.Series(np.array(np.zeros(1))),pd.Series(np.array(np.zeros(1))),pd.Series(np.array(np.zeros(1)))
         
         def start_plotting():
             self.real_time_plot_monitor= SCREEN.after(1000, update_plot)
-            # update_plot()
             start_plotting_btn['state'] = 'disabled'
             stop_plotting_btn['state'] = 'normal'
             pass
@@ -170,120 +159,57 @@ class PLOT_SCREEN:
         figure = plt.figure(figsize=(20,8))
         # humidity
         fig1 = figure.add_subplot(335)
-        # fig1.plot(self.humidity)
         fig1.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig1.set_ylabel('Humidity (%)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.temperature_c)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.temperature_c))
-        # ylim_start = 0
-        # ylim_end = max(self.temperature_c)
-        # fig1.set_xlim(xlim_start, xlim_end)
-        # fig1.set_ylim(ylim_start, ylim_end+5)
         lines1 = fig1.plot([], [])[0]
 
         # temperature_c
         fig2 = figure.add_subplot(331)
-        # fig2.plot(self.humidity)
         fig2.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig2.set_ylabel('Temperature (°C)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.humidity)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.humidity))
-        # ylim_start = 0
-        # ylim_end = self.humidity.max()
-        # fig2.set_xlim(xlim_start, xlim_end)
-        # fig2.set_ylim(ylim_start, ylim_end+5)
         lines2 = fig2.plot([], [])[0]
 
         # temperature_f
         fig3 = figure.add_subplot(334)
-        # fig3.plot(self.heat_index_c)
         fig3.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig3.set_ylabel('Temperature (°F)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.heat_index_c)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.heat_index_c))
-        # ylim_start = 0
-        # ylim_end = self.heat_index_c.max()
-        # fig3.set_xlim(xlim_start, xlim_end)
-        # fig3.set_ylim(ylim_start, ylim_end+5)
         lines3 = fig3.plot([], [])[0]
 
         # heat_index_c
         fig4 = figure.add_subplot(333)
-        # fig4.plot(self.temperature_f)
         fig4.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig4.set_ylabel('Heat Index (°C)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.temperature_f)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.temperature_f))
-        # ylim_start = 0
-        # ylim_end = self.temperature_f.max()
-        # fig4.set_xlim(xlim_start, xlim_end)
-        # fig4.set_ylim(ylim_start, ylim_end+10)
         lines4 = fig4.plot([], [])[0]
 
         # heat_index_f
         fig5 = figure.add_subplot(336)
-        # fig5.plot(self.heat_index_f)
         fig5.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig5.set_ylabel('Heat Index (°F)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.heat_index_f)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.heat_index_f))
-        # ylim_start = 0
-        # ylim_end = self.heat_index_f.max()
-        # fig5.set_xlim(xlim_start, xlim_end)
-        # fig5.set_ylim(ylim_start, ylim_end+5)
         lines5 = fig5.plot([], [])[0]
 
         # uv index
         fig6 = figure.add_subplot(337)
-        # fig5.plot(self.heat_index_f)
         fig6.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig6.set_ylabel('UV Index', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.heat_index_f)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.heat_index_f))
-        # ylim_start = 0
-        # ylim_end = self.heat_index_f.max()
-        # fig5.set_xlim(xlim_start, xlim_end)
-        # fig5.set_ylim(ylim_start, ylim_end+5)
         lines6 = fig6.plot([], [])[0]
 
         fig7 = figure.add_subplot(339)
-        # fig5.plot(self.heat_index_f)
         fig7.set_xlabel('Time (s)', fontsize=int(
             SCREEN.winfo_screenheight()/80))
         fig7.set_ylabel('UV Sensor Voltage', fontsize=int(
             SCREEN.winfo_screenheight()/80))
-        # xlim_start = len(self.heat_index_f)-100
-        # if xlim_start < 0:
-        #     xlim_start = 0
-        # xlim_end = int(len(self.heat_index_f))
-        # ylim_start = 0
-        # ylim_end = self.heat_index_f.max()
-        # fig5.set_xlim(xlim_start, xlim_end)
-        # fig5.set_ylim(ylim_start, ylim_end+5)
         lines7 = fig7.plot([], [])[0]
 
         figure.tight_layout()
@@ -294,12 +220,6 @@ class PLOT_SCREEN:
         toolbar = NavigationToolbar2Tk(canvas1, SCREEN)
         toolbar.config(bg='')
         toolbar.update()
-
-
-# def plot_screen():
-#     plot_sc = PLOT_SCREEN(root)
-#     pass
-
 
 '''
 BY DEFAULT THE WINDOW SHOULD ALL THE GRAPHS IN PLACE AS EMPTY

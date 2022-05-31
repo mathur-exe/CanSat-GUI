@@ -1,57 +1,37 @@
 from time import sleep
 from tkinter import *
-from window_utilities import window_utils
-from PIL import ImageTk
-import tkintermapview as mapview
-from plot_window import PLOT_SCREEN
-import serial
+
 import numpy as np
+import serial
+import tkintermapview as mapview
+from PIL import ImageTk
+
+from plot_window import PLOT_SCREEN
+from window_utilities import window_utils
+
 
 class GPS_WINDOW:
     def __init__(self, SCREEN,serial_device):
         def open_plot_window():
-            # self.SCREEN.withdraw()
             plot_window = PLOT_SCREEN(self.SCREEN)
             pass
-        # self.SCREEN = Toplevel(SCREEN)
         self.SCREEN = SCREEN
         self.data=None
-        # self.ser=serial.Serial('COM7',9600)
         self.ser=serial_device
         self.CANSAT_LATITUDE = 18.51883080425217
         self.CANSAT_LONGITUDE = 73.81659914010753
-        # window_utils.bring_screen_to_center(self.SCREEN)
-        # window_utils.set_heading(self.SCREEN)
         window_width = int(self.SCREEN.winfo_screenwidth())
-        # window_width = 640
         window_height = int(self.SCREEN.winfo_screenheight())
-        # creating the buttons inside the tabs frame in the main window
-        # this exists for all the windows of the GUI
-        # TABS_FRAME = window_utils.create_frame(window=self.SCREEN)
-        # inserting the switch to CANSAT window option
-        # OPEN_CANSAT_WINDOW = Button(
-        #     TABS_FRAME, text='CANSAT', width=int(window_width*0.010))
-        # OPEN_CANSAT_WINDOW.pack(anchor=CENTER, side=LEFT)
-        # OPEN_PAYLOAD_WINDOW = Button(
-        #     TABS_FRAME, text='PAYLOAD', width=int(window_width*0.010))
-        # OPEN_PAYLOAD_WINDOW.pack(
-        #     anchor=CENTER, side=LEFT, padx=int(0.010*window_width))
-        # OPEN_PLOT_WINDOW = Button(
-        #     TABS_FRAME, text='PLOTS', width=int(window_width*0.010), command=open_plot_window)
-        # OPEN_PLOT_WINDOW.pack(anchor=CENTER, side=LEFT)
         
         def start_plotting():
             start_plotting_button['state'] = 'disabled'
             self.real_time_plotting_monitor = SCREEN.after(
                 1000, start_real_time_gps)
-            # sleep(2)
-            # start_plotting_button['state'] = 'normal'
         def stop_plotting():
             SCREEN.after_cancel(self.real_time_plotting_monitor)
             start_plotting_button['state'] = 'normal'
         def start_real_time_gps():
             try:
-                # while self.ser.in_waiting:
                 self.data = self.ser.readline()
                 self.data = self.data.decode()
                 self.data = self.data.strip('\r\n')
@@ -66,10 +46,8 @@ class GPS_WINDOW:
                 self.path.delete()
                 self.path=gps_map.set_path([self.MITWPU_location.position,self.cansat_location.position])
                 gps_map.set_position(self.CANSAT_LATITUDE, self.CANSAT_LONGITUDE)
-                # gps_map.set_path([self.MITWPU_location.position,self.cansat_location.position])
                 latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
                 longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
-                # gps_map.set_zoom(15)
                 random_val=np.random.randint(30,size=(1,1))
                 random_val=random_val.tolist()
                 random_val=random_val[0]
@@ -149,27 +127,13 @@ class GPS_WINDOW:
         # set the college location
         self.mitwpu_lat = 18.518285031299342
         self.mitwpu_long = 73.81472988306248
-        # gps_map.set_position(,
-                            #  , marker=True, text='MITWPU')
         gps_map.set_position(self.mitwpu_lat, self.mitwpu_long)
         
         self.MITWPU_location=gps_map.set_marker(self.mitwpu_lat, self.mitwpu_long,text='MITWPU')
         # set the satellite location
         self.cansat_location=gps_map.set_marker(self.CANSAT_LATITUDE,self.CANSAT_LONGITUDE ,text='Cansat')
-        # self.can_sat_location=gps_map.set_position(18.507249128665855,
-        #                      73.80523053001455, marker=True, text='CANSAT')
-        # gps_map.set_path([(18.507249128665855, 73.80523053001455),
-                        #  (18.518285031299342, 73.81472988306248)])
         self.path=gps_map.set_path([self.MITWPU_location.position,self.cansat_location.position])
         gps_map.set_zoom(15)
         
         longitude_lbl_VAL.config(text=round(self.CANSAT_LONGITUDE, 4))
         latitude_lbl_VAL.config(text=round(self.CANSAT_LATITUDE, 4))
-        # self.real_time_plotting_monitor=SCREEN.after(1000, start_real_time_gps)
-        
-
-
-# root = Tk()
-# root.withdraw()
-# gps_scn = GPS_WINDOW(root)
-# root.mainloop()
