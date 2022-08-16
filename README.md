@@ -1,8 +1,8 @@
 # CanSat-GUI
 
 # Work done till now
-Tab functionality implementation to plot both payload and satellite plots simulataneously.
-Real time data reception from serial port.
+** Tab functionality implementation to plot both payload and satellite plots simulataneously.
+** Real time data reception from serial port.
 
 # Further improvements to be made
 Save the data on local drive.
