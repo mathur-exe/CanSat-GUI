@@ -6,7 +6,7 @@ Tab functionality implementation to plot both payload and satellite plots simula
 <br>
 Real time data reception from serial port.
 
-# Further improvements to be made
+# Further features can be added
 Save the data on local drive.
 <br>
 Perform data analysis on data and make predictions.
