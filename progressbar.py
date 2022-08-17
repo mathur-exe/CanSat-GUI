@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 
+"""
+    UI for progress bars 
+    - 
+"""
+
 # root window
 root = tk.Tk()
 root.geometry('300x120')
