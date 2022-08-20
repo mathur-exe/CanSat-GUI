@@ -5,6 +5,17 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter import messagebox
 
+"""
+    All the window utility functions 
+        - Window Heading
+        - Window Background
+        - Window resizing and it's placement on screen
+        - Read data
+        - Login dropdown window 
+        - Add image
+        - Quit window (double check)
+        - Menu options (Home, PAYLoad, GPS, CANSAT) 
+"""
 
 class window_utils:
     def set_heading(window):

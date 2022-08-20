@@ -10,6 +10,13 @@ from matplotlib.figure import Figure
 
 from window_utilities import window_utils
 
+"""
+    Plotting window to plot
+    - Temp in C & F
+    - Humidity 
+    - Heat_Index in both C & F
+"""
+
 
 class PLOT_SCREEN:
     def __init__(self, PREVIOUS_SCREEN):        
